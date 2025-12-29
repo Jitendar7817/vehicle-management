@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Vehicle Management System</title>
+    <style>
+        body {
+            font-family: monospace;
+            padding: 20px;
+        }
+        input {
+            width: 250px;
+            padding: 5px;
+        }
+        button {
+            padding: 6px 10px;
+            margin-right: 5px;
+        }
+        hr {
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Vehicle Management System</h1>
+
+<label>Vehicle ID (for Update/Delete):</label><br>
+<input type="number" id="id"><br><br>
+
+<label>Vehicle Number:</label><br>
+<input type="text" id="number"><br><br>
+
+<label>Owner Name:</label><br>
+<input type="text" id="owner"><br><br>
+
+<button onclick="addVehicle()">Add Vehicle</button>
+<button onclick="updateVehicle()">Update Vehicle</button>
+<button onclick="deleteVehicle()">Delete Vehicle</button>
+
+<hr>
+
+<h2>Vehicle List</h2>
+<div id="list"></div>
+
+<script>
+    let vehicles = [
+        {id: 1, number: "MH12AB1234", owner: "Rahul Sharma"},
+        {id: 2, number: "DL01XY9876", owner: "Amit Kumar"}
+    ];
+
+    function displayVehicles() {
+        let list = document.getElementById("list");
+        list.innerHTML = "";
+        vehicles.forEach(v => {
+            list.innerHTML += `• ID: ${v.id} | Number: ${v.number} | Owner: ${v.owner}<br>`;
+        });
+    }
+
+    function addVehicle() {
+        let number = document.getElementById("number").value;
+        let owner = document.getElementById("owner").value;
+
+        if (number === "" || owner === "") {
+            alert("Fill all fields");
+            return;
+        }
+
+        let id = vehicles.length + 1;
+        vehicles.push({id, number, owner});
+        displayVehicles();
+    }
+
+    function updateVehicle() {
+        let id = parseInt(document.getElementById("id").value);
+        let number = document.getElementById("number").value;
+        let owner = document.getElementById("owner").value;
+
+        let vehicle = vehicles.find(v => v.id === id);
+        if (!vehicle) {
+            alert("Vehicle not found");
+            return;
+        }
+
+        vehicle.number = number;
+        vehicle.owner = owner;
+        displayVehicles();
+    }
+
+    function deleteVehicle() {
+        let id = parseInt(document.getElementById("id").value);
+        vehicles = vehicles.filter(v => v.id !== id);
+        displayVehicles();
+    }
+
+    displayVehicles();
+</script>
+
+</body>
+</html>
